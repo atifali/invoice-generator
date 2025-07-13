@@ -91,8 +91,8 @@ function InvoiceForm({ values, setValues, previewRef }) {
                 {/* Company Details */}
                 <div>
                     <h2 className="text-xl font-bold mb-4">Company Details</h2>
-                    <div className="flex flex-wrap gap-4 items-end">
-                        <div className="form-control w-52">
+                    <div className="flex flex-wrap gap-4">
+                        <div className="form-control w-60">
                             <label className="label">
                                 <span className="label-text">Company Logo</span>
                             </label>
@@ -104,7 +104,7 @@ function InvoiceForm({ values, setValues, previewRef }) {
                                 onChange={handleChange}
                             />
                         </div>
-                        <div className="form-control flex-1 min-w-52">
+                        <div className="form-control min-w-52">
                             <label className="label">
                                 <span className="label-text">Company Name</span>
                             </label>
@@ -143,13 +143,13 @@ function InvoiceForm({ values, setValues, previewRef }) {
                 <div>
                     <h2 className="text-xl font-bold mb-4">Customer Details</h2>
                     <div className="flex flex-wrap gap-4">
-                        <div className="form-control flex-1 min-w-40">
+                        <div className="form-control min-w-40">
                             <label className="label">
                                 <span className="label-text">Name</span>
                             </label>
                             <input type="text" name="customerName" className="input input-bordered" required value={values.customerName} onChange={handleChange} />
                         </div>
-                        <div className="form-control flex-1 min-w-40">
+                        <div className="form-control min-w-40">
                             <label className="label">
                                 <span className="label-text">Email</span>
                             </label>
@@ -214,8 +214,8 @@ function InvoiceForm({ values, setValues, previewRef }) {
                     <h2 className="text-xl font-bold mb-4">Invoice Items</h2>
                     <div className="flex flex-col gap-4">
                         {values.items.map((item, idx) => (
-                            <div className="flex flex-wrap gap-4 items-center" key={idx}>
-                                <div className="form-control flex-1 min-w-40">
+                            <div className="flex gap-4 items-center" key={idx}>
+                                <div className="form-control min-w-40">
                                     <label className="label">
                                         <span className="label-text">Item Details</span>
                                     </label>
