@@ -215,7 +215,7 @@ function InvoiceForm({ values, setValues, previewRef }) {
                     <div className="flex flex-col gap-4">
                         {values.items.map((item, idx) => (
                             <div className="flex gap-4 items-center" key={idx}>
-                                <div className="form-control min-w-40">
+                                <div className="form-control flex-1 min-w-30">
                                     <label className="label">
                                         <span className="label-text">Item Details</span>
                                     </label>
@@ -229,7 +229,7 @@ function InvoiceForm({ values, setValues, previewRef }) {
                                         onChange={handleChange}
                                     />
                                 </div>
-                                <div className="form-control w-32">
+                                <div className="form-control flex-1 w-32">
                                     <label className="label">
                                         <span className="label-text">Quantity</span>
                                     </label>
@@ -244,7 +244,7 @@ function InvoiceForm({ values, setValues, previewRef }) {
                                         onChange={handleChange}
                                     />
                                 </div>
-                                <div className="form-control w-32">
+                                <div className="form-control flex-1 w-32">
                                     <label className="label">
                                         <span className="label-text">Price</span>
                                     </label>
