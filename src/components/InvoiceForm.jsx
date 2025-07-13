@@ -48,27 +48,6 @@ function InvoiceForm({ values, setValues, previewRef }) {
                 <html>
                 <head>
                     <title>Invoice</title>
-                    <style>
-                        body { font-family: sans-serif; margin: 0; padding: 2rem; background: #fff; }
-                        .bg-base-100 { background: #fff; }
-                        .border-base-300 { border-color: #e5e7eb; }
-                        .rounded-lg { border-radius: 0.5rem; }
-                        .shadow { box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px -1px rgba(0,0,0,0.1); }
-                        .p-8 { padding: 2rem; }
-                        .max-w-2xl { max-width: 42rem; }
-                        .mx-auto { margin-left: auto; margin-right: auto; }
-                        table { border-collapse: collapse; width: 100%; }
-                        th, td { border: 1px solid #e5e7eb; padding: 0.5rem; text-align: left; }
-                        th { background: #f3f4f6; }
-                        .text-right { text-align: right; }
-                        .text-2xl { font-size: 1.5rem; }
-                        .font-bold { font-weight: bold; }
-                        .mb-8 { margin-bottom: 2rem; }
-                        .mb-4 { margin-bottom: 1rem; }
-                        .font-semibold { font-weight: 600; }
-                        .text-sm { font-size: 0.875rem; }
-                        .text-base { font-size: 1rem; }
-                    </style>
                 </head>
                 <body>
                     ${previewRef.current.innerHTML}
@@ -235,7 +214,7 @@ function InvoiceForm({ values, setValues, previewRef }) {
                     <h2 className="text-xl font-bold mb-4">Invoice Items</h2>
                     <div className="flex flex-col gap-4">
                         {values.items.map((item, idx) => (
-                            <div className="flex flex-wrap gap-4 items-end" key={idx}>
+                            <div className="flex flex-wrap gap-4 items-center" key={idx}>
                                 <div className="form-control flex-1 min-w-40">
                                     <label className="label">
                                         <span className="label-text">Item Details</span>
