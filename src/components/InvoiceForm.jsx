@@ -284,19 +284,19 @@ function InvoiceForm({ values, setValues, previewRef }) {
                 <div>
                     <h2 className="text-xl font-bold mb-4">Additional Information</h2>
                     <div className="flex flex-wrap gap-4">
-                        <div className="form-control flex-1 min-w-40">
+                        <div className="form-control min-w-40">
                             <label className="label">
                                 <span className="label-text">Custom Field Name</span>
                             </label>
                             <input type="text" name="customFieldName" className="input input-bordered" value={values.customFieldName} onChange={handleChange} />
                         </div>
-                        <div className="form-control flex-1 min-w-40">
+                        <div className="form-control min-w-40">
                             <label className="label">
                                 <span className="label-text">Custom Field Value</span>
                             </label>
                             <input type="text" name="customFieldValue" className="input input-bordered" value={values.customFieldValue} onChange={handleChange} />
                         </div>
-                        <div className="form-control flex-1 min-w-40">
+                        <div className="form-control min-w-40">
                             <label className="label">
                                 <span className="label-text">Contact Email</span>
                             </label>
