@@ -1,8 +1,15 @@
 function InvoiceForm({ values, setValues }) {
-    // Handle all input changes, including file input for logo
+    // Handle all input changes, including file input for logo and dynamic items
     const handleChange = (e) => {
-        const { name, value, type, files } = e.target;
-        if (type === "file") {
+        const { name, value, type, files, dataset } = e.target;
+        if (dataset.idx !== undefined) {
+            // Item row change
+            const idx = Number(dataset.idx);
+            const updatedItems = values.items.map((item, i) =>
+                i === idx ? { ...item, [name]: value } : item
+            );
+            setValues({ ...values, items: updatedItems });
+        } else if (type === "file") {
             const file = files[0];
             if (file) {
                 const reader = new FileReader();
@@ -14,6 +21,20 @@ function InvoiceForm({ values, setValues }) {
         } else {
             setValues({ ...values, [name]: value });
         }
+    };
+
+    const handleAddItem = () => {
+        setValues({
+            ...values,
+            items: [...values.items, { itemDetails: "", quantity: "1", price: "" }]
+        });
+    };
+
+    const handleRemoveItem = (idx) => {
+        setValues({
+            ...values,
+            items: values.items.filter((_, i) => i !== idx)
+        });
     };
 
     return (
@@ -165,22 +186,74 @@ function InvoiceForm({ values, setValues }) {
                     </div>
                 </div>
 
-                {/* Invoice Item */}
+                {/* Invoice Items */}
                 <div>
-                    <h2 className="text-xl font-bold mb-4">Invoice Item</h2>
-                    <div className="flex flex-wrap gap-4">
-                        <div className="form-control flex-1 min-w-40">
-                            <label className="label">
-                                <span className="label-text">Item Details</span>
-                            </label>
-                            <input type="text" name="itemDetails" className="input input-bordered" required value={values.itemDetails} onChange={handleChange} />
-                        </div>
-                        <div className="form-control w-40">
-                            <label className="label">
-                                <span className="label-text">Quantity</span>
-                            </label>
-                            <input type="number" name="quantity" min={1} className="input input-bordered" required value={values.quantity} onChange={handleChange} />
-                        </div>
+                    <h2 className="text-xl font-bold mb-4">Invoice Items</h2>
+                    <div className="flex flex-col gap-4">
+                        {values.items.map((item, idx) => (
+                            <div className="flex flex-wrap gap-4 items-end" key={idx}>
+                                <div className="form-control flex-1 min-w-40">
+                                    <label className="label">
+                                        <span className="label-text">Item Details</span>
+                                    </label>
+                                    <input
+                                        className="input input-bordered"
+                                        required
+                                        type="text"
+                                        name="itemDetails"
+                                        data-idx={idx}
+                                        value={item.itemDetails}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                                <div className="form-control w-32">
+                                    <label className="label">
+                                        <span className="label-text">Quantity</span>
+                                    </label>
+                                    <input
+                                        min="1"
+                                        className="input input-bordered"
+                                        required
+                                        type="number"
+                                        name="quantity"
+                                        data-idx={idx}
+                                        value={item.quantity}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                                <div className="form-control w-32">
+                                    <label className="label">
+                                        <span className="label-text">Price</span>
+                                    </label>
+                                    <input
+                                        min="0"
+                                        className="input input-bordered"
+                                        required
+                                        type="number"
+                                        name="price"
+                                        data-idx={idx}
+                                        value={item.price}
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                                <button
+                                    type="button"
+                                    className="btn btn-error btn-sm mt-6"
+                                    onClick={() => handleRemoveItem(idx)}
+                                    disabled={values.items.length === 1}
+                                    title="Remove item"
+                                >
+                                    ✕
+                                </button>
+                            </div>
+                        ))}
+                        <button
+                            type="button"
+                            className="btn btn-outline btn-primary mt-2"
+                            onClick={handleAddItem}
+                        >
+                            + Add Item
+                        </button>
                     </div>
                 </div>
 

@@ -24,9 +24,18 @@ function InvoicePreview({
         quantity: "1",
         customFieldName: "Project Code",
         customFieldValue: "WD2024",
-        contactEmail: "support@acme.com"
+        contactEmail: "support@acme.com",
+        items: [
+            { itemDetails: "Web Design Services", quantity: "1", price: "500" }
+        ]
     }
 }) {
+    // Calculate total
+    const total = values.items.reduce(
+        (sum, item) => sum + (parseFloat(item.price || 0) * parseInt(item.quantity || 1, 10)),
+        0
+    );
+
     return (
         <div className="bg-base-100 border border-base-300 rounded-lg shadow p-8 max-w-2xl mx-auto">
             {/* Header */}
@@ -82,16 +91,26 @@ function InvoicePreview({
                             <tr>
                                 <th>Item</th>
                                 <th>Quantity</th>
+                                <th>Price</th>
                                 <th>Amount</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>{values.itemDetails}</td>
-                                <td>{values.quantity}</td>
-                                <td>${Number(values.amountPaid).toLocaleString()}</td>
-                            </tr>
+                            {values.items.map((item, idx) => (
+                                <tr key={idx}>
+                                    <td>{item.itemDetails}</td>
+                                    <td>{item.quantity}</td>
+                                    <td>${parseFloat(item.price || 0).toLocaleString()}</td>
+                                    <td>${(parseFloat(item.price || 0) * parseInt(item.quantity || 1, 10)).toLocaleString()}</td>
+                                </tr>
+                            ))}
                         </tbody>
+                        <tfoot>
+                            <tr>
+                                <th colSpan={3} className="text-right">Total</th>
+                                <th>${total.toLocaleString()}</th>
+                            </tr>
+                        </tfoot>
                     </table>
                 </div>
             </div>

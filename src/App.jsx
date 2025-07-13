@@ -22,8 +22,9 @@ const initialValues = {
   amountPaid: "500",
   paymentType: "Credit Card",
   last4: "1234",
-  itemDetails: "Web Design Services",
-  quantity: "1",
+  items: [
+    { itemDetails: "Web Design Services", quantity: "1", price: "500" }
+  ],
   customFieldName: "Project Code",
   customFieldValue: "WD2024",
   contactEmail: "support@acme.com"
