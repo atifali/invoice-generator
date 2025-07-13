@@ -42,12 +42,35 @@ function InvoiceForm({ values, setValues, previewRef }) {
     // Print handler
     const handlePrint = () => {
         if (previewRef && previewRef.current) {
-            // Open a new window with the preview's HTML
+            // Get all <style> and <link rel="stylesheet"> tags from the current document
+            const styles = Array.from(document.querySelectorAll('style,link[rel="stylesheet"]'))
+                .map(node => node.outerHTML)
+                .join('\n');
+
+            // Open a new window with the preview's HTML and styles
             const printWindow = window.open("", "_blank", "width=900,height=900");
             printWindow.document.write(`
                 <html>
                 <head>
                     <title>Invoice</title>
+                    ${styles}
+                    <style>
+                        @media print {
+                            body {
+                                background: white !important;
+                            }
+                            .bg-base-100, .bg-base-200 {
+                                background: white !important;
+                            }
+                            .shadow, .shadow-lg, .shadow-md {
+                                box-shadow: none !important;
+                            }
+                            .mx-auto, .max-w-2xl {
+                                margin: 0 auto !important;
+                                max-width: 800px !important;
+                            }
+                        }
+                    </style>
                 </head>
                 <body>
                     ${previewRef.current.innerHTML}
