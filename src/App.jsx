@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import Header from "./components/Header";
 import InvoiceForm from "./components/InvoiceForm";
 import InvoicePreview from "./components/InvoicePreview";
@@ -31,17 +31,20 @@ const initialValues = {
 };
 
 function App() {
-  const [formValues, setFormValues] = useState(initialValues);
+  const [formValues, setFormValues] = React.useState(initialValues);
+  const previewRef = useRef();
 
   return (
     <>
       <Header />
       <div className="p-4 flex gap-4">
         <div className="flex-1">
-          <InvoiceForm values={formValues} setValues={setFormValues} />
+          <InvoiceForm values={formValues} setValues={setFormValues} previewRef={previewRef} />
         </div>
         <div className="flex-1">
-          <InvoicePreview values={formValues} />
+          <div ref={previewRef}>
+            <InvoicePreview values={formValues} />
+          </div>
         </div>
       </div>
     </>

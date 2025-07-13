@@ -1,4 +1,6 @@
-function InvoiceForm({ values, setValues }) {
+import React, { useRef } from "react";
+
+function InvoiceForm({ values, setValues, previewRef }) {
     // Handle all input changes, including file input for logo and dynamic items
     const handleChange = (e) => {
         const { name, value, type, files, dataset } = e.target;
@@ -37,9 +39,51 @@ function InvoiceForm({ values, setValues }) {
         });
     };
 
+    // Print handler
+    const handlePrint = () => {
+        if (previewRef && previewRef.current) {
+            // Open a new window with the preview's HTML
+            const printWindow = window.open("", "_blank", "width=900,height=900");
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>Invoice</title>
+                    <style>
+                        body { font-family: sans-serif; margin: 0; padding: 2rem; background: #fff; }
+                        .bg-base-100 { background: #fff; }
+                        .border-base-300 { border-color: #e5e7eb; }
+                        .rounded-lg { border-radius: 0.5rem; }
+                        .shadow { box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px -1px rgba(0,0,0,0.1); }
+                        .p-8 { padding: 2rem; }
+                        .max-w-2xl { max-width: 42rem; }
+                        .mx-auto { margin-left: auto; margin-right: auto; }
+                        table { border-collapse: collapse; width: 100%; }
+                        th, td { border: 1px solid #e5e7eb; padding: 0.5rem; text-align: left; }
+                        th { background: #f3f4f6; }
+                        .text-right { text-align: right; }
+                        .text-2xl { font-size: 1.5rem; }
+                        .font-bold { font-weight: bold; }
+                        .mb-8 { margin-bottom: 2rem; }
+                        .mb-4 { margin-bottom: 1rem; }
+                        .font-semibold { font-weight: 600; }
+                        .text-sm { font-size: 0.875rem; }
+                        .text-base { font-size: 1rem; }
+                    </style>
+                </head>
+                <body>
+                    ${previewRef.current.innerHTML}
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.focus();
+            printWindow.print();
+        }
+    };
+
     return (
         <div className="bg-base-100 border border-base-300 rounded-lg shadow p-8">
-            <form className="space-y-8" onSubmit={e => e.preventDefault()}>
+            <form className="space-y-8" onSubmit={e => { e.preventDefault(); handlePrint(); }}>
                 {/* Invoice Details */}
                 <div>
                     <h2 className="text-xl font-bold mb-4">Invoice Details</h2>
