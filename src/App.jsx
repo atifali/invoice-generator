@@ -6,9 +6,13 @@ function App() {
   return (
     <>
       <Header />
-      <div className="p-4 flex gap-4 w-screen">
-        <InvoiceForm className="" />
-        <InvoicePreview className="" />
+      <div className="p-4 flex gap-4">
+        <div className="flex-1">
+          <InvoiceForm />
+        </div>
+        <div className="flex-1">
+          <InvoicePreview />
+        </div>
       </div>
     </>
   )
