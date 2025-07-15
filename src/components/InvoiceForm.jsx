@@ -330,8 +330,8 @@ function InvoiceForm({ values, setValues, previewRef }) {
                     <h2 className="text-xl font-bold mb-4">Additional Information</h2>
                     <div className="flex flex-col gap-4">
                         {values.customFields.map((field, idx) => (
-                            <div className="flex gap-2 items-end" key={idx}>
-                                <div className="form-control min-w-40 flex-1">
+                            <div className="flex gap-4 items-end" key={idx}>
+                                <div className="form-control flex-1 min-w-40">
                                     <label className="label">
                                         <span className="label-text">Custom Field Name</span>
                                     </label>
@@ -346,7 +346,7 @@ function InvoiceForm({ values, setValues, previewRef }) {
                                         placeholder="Field Name"
                                     />
                                 </div>
-                                <div className="form-control min-w-40 flex-1">
+                                <div className="form-control flex-1 w-40">
                                     <label className="label">
                                         <span className="label-text">Custom Field Value</span>
                                     </label>
@@ -374,12 +374,12 @@ function InvoiceForm({ values, setValues, previewRef }) {
                         ))}
                         <button
                             type="button"
-                            className="btn btn-outline btn-primary mt-2 w-fit"
+                            className="btn btn-outline btn-primary mt-2"
                             onClick={handleAddCustomField}
                         >
                             + Add Custom Field
                         </button>
-                        <div className="form-control min-w-40">
+                        <div className="form-control w-60">
                             <label className="label">
                                 <span className="label-text">Contact Email</span>
                             </label>
