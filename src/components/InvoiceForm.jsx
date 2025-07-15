@@ -330,7 +330,7 @@ function InvoiceForm({ values, setValues, previewRef }) {
                     <h2 className="text-xl font-bold mb-4">Additional Information</h2>
                     <div className="flex flex-col gap-4">
                         {values.customFields.map((field, idx) => (
-                            <div className="flex gap-4 items-end" key={idx}>
+                            <div className="flex gap-4 items-center" key={idx}>
                                 <div className="form-control flex-1 min-w-40">
                                     <label className="label">
                                         <span className="label-text">Custom Field Name</span>
@@ -361,15 +361,17 @@ function InvoiceForm({ values, setValues, previewRef }) {
                                         placeholder="Field Value"
                                     />
                                 </div>
-                                <button
-                                    type="button"
-                                    className="btn btn-error btn-sm mb-2"
-                                    onClick={() => handleRemoveCustomField(idx)}
-                                    disabled={values.customFields.length === 1}
-                                    title="Remove custom field"
-                                >
-                                    ✕
-                                </button>
+                                <div className="flex items-center h-full pt-6">
+                                    <button
+                                        type="button"
+                                        className="btn btn-error btn-sm"
+                                        onClick={() => handleRemoveCustomField(idx)}
+                                        disabled={values.customFields.length === 1}
+                                        title="Remove custom field"
+                                    >
+                                        ✕
+                                    </button>
+                                </div>
                             </div>
                         ))}
                         <button
