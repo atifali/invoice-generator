@@ -4,7 +4,14 @@ function InvoiceForm({ values, setValues, previewRef }) {
     // Handle all input changes, including file input for logo and dynamic items
     const handleChange = (e) => {
         const { name, value, type, files, dataset } = e.target;
-        if (dataset.idx !== undefined) {
+        if (dataset.idx !== undefined && dataset.type === "custom") {
+            // Custom field change
+            const idx = Number(dataset.idx);
+            const updatedCustomFields = values.customFields.map((field, i) =>
+                i === idx ? { ...field, [name]: value } : field
+            );
+            setValues({ ...values, customFields: updatedCustomFields });
+        } else if (dataset.idx !== undefined) {
             // Item row change
             const idx = Number(dataset.idx);
             const updatedItems = values.items.map((item, i) =>
@@ -36,6 +43,21 @@ function InvoiceForm({ values, setValues, previewRef }) {
         setValues({
             ...values,
             items: values.items.filter((_, i) => i !== idx)
+        });
+    };
+
+    // Handlers for custom fields
+    const handleAddCustomField = () => {
+        setValues({
+            ...values,
+            customFields: [...values.customFields, { name: '', value: '' }]
+        });
+    };
+
+    const handleRemoveCustomField = (idx) => {
+        setValues({
+            ...values,
+            customFields: values.customFields.filter((_, i) => i !== idx)
         });
     };
 
@@ -306,24 +328,68 @@ function InvoiceForm({ values, setValues, previewRef }) {
                 {/* Additional Information */}
                 <div>
                     <h2 className="text-xl font-bold mb-4">Additional Information</h2>
-                    <div className="flex flex-wrap gap-4">
-                        <div className="form-control min-w-40">
-                            <label className="label">
-                                <span className="label-text">Custom Field Name</span>
-                            </label>
-                            <input type="text" name="customFieldName" className="input input-bordered" value={values.customFieldName} onChange={handleChange} />
-                        </div>
-                        <div className="form-control min-w-40">
-                            <label className="label">
-                                <span className="label-text">Custom Field Value</span>
-                            </label>
-                            <input type="text" name="customFieldValue" className="input input-bordered" value={values.customFieldValue} onChange={handleChange} />
-                        </div>
+                    <div className="flex flex-col gap-4">
+                        {values.customFields.map((field, idx) => (
+                            <div className="flex gap-2 items-end" key={idx}>
+                                <div className="form-control min-w-40 flex-1">
+                                    <label className="label">
+                                        <span className="label-text">Custom Field Name</span>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="name"
+                                        className="input input-bordered"
+                                        value={field.name}
+                                        data-idx={idx}
+                                        data-type="custom"
+                                        onChange={handleChange}
+                                        placeholder="Field Name"
+                                    />
+                                </div>
+                                <div className="form-control min-w-40 flex-1">
+                                    <label className="label">
+                                        <span className="label-text">Custom Field Value</span>
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="value"
+                                        className="input input-bordered"
+                                        value={field.value}
+                                        data-idx={idx}
+                                        data-type="custom"
+                                        onChange={handleChange}
+                                        placeholder="Field Value"
+                                    />
+                                </div>
+                                <button
+                                    type="button"
+                                    className="btn btn-error btn-sm mb-2"
+                                    onClick={() => handleRemoveCustomField(idx)}
+                                    disabled={values.customFields.length === 1}
+                                    title="Remove custom field"
+                                >
+                                    ✕
+                                </button>
+                            </div>
+                        ))}
+                        <button
+                            type="button"
+                            className="btn btn-outline btn-primary mt-2 w-fit"
+                            onClick={handleAddCustomField}
+                        >
+                            + Add Custom Field
+                        </button>
                         <div className="form-control min-w-40">
                             <label className="label">
                                 <span className="label-text">Contact Email</span>
                             </label>
-                            <input type="email" name="contactEmail" className="input input-bordered" value={values.contactEmail} onChange={handleChange} />
+                            <input
+                                type="email"
+                                name="contactEmail"
+                                className="input input-bordered"
+                                value={values.contactEmail}
+                                onChange={handleChange}
+                            />
                         </div>
                     </div>
                 </div>

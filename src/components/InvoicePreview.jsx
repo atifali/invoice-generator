@@ -138,10 +138,22 @@ function InvoicePreview({
             <div className="mb-4">
                 <div className="font-bold mb-2">Additional Information</div>
                 <div className="flex flex-wrap gap-8">
-                    <div>
-                        <div className="font-semibold">{values.customFieldName || "Custom Field"}</div>
-                        <div>{values.customFieldValue}</div>
-                    </div>
+                    {/* Render all custom fields if present */}
+                    {Array.isArray(values.customFields) && values.customFields.length > 0
+                        ? values.customFields.map((field, idx) => (
+                            <div key={idx}>
+                                <div className="font-semibold">{field.name || "Custom Field"}</div>
+                                <div>{field.value}</div>
+                            </div>
+                        ))
+                        : (
+                            // fallback for old single field
+                            <div>
+                                <div className="font-semibold">{values.customFieldName || "Custom Field"}</div>
+                                <div>{values.customFieldValue}</div>
+                            </div>
+                        )
+                    }
                     <div>
                         <div className="font-semibold">Contact Email</div>
                         <div>{values.contactEmail}</div>
